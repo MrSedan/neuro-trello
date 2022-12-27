@@ -1,0 +1,9 @@
+.vscode
+/build
+.DS_Store
+node_modules
+uploads/
+
+# Local env files
+.env.local
+.env.*.local
