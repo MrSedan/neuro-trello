@@ -2,8 +2,17 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 
+const storage: multer.StorageEngine = multer.diskStorage({
+   destination: (_req, _file, _cb) => {
+    _cb(null, 'uploads');
+   },
+   filename: (_req, _file, _cb) => {
+    _cb(null, Date.now()+'-'+_file.originalname);
+   }
+});
+
 const app: express.Application = express();
-const upload: multer.Multer = multer({dest: 'uploads/'});
+const upload: multer.Multer = multer({storage: storage});
 
 const port: number = 3500;
 
