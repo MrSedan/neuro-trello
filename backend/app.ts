@@ -15,10 +15,6 @@ app.get('/', (_req, _res) => {
     _res.status(200).send({"status": "ok"});
 });
 
-app.post('/aboba', (_req, _res) => {
-    _res.status(200).json(_req.body);
-});
-
 app.post('/profile', upload.single('avatar'), (_req, _res, _next) => {
     console.log(_req.file, _req.body);
     _res.json(_req.body);
