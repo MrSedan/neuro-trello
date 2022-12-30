@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 const router = Router();
 const prisma = new PrismaClient();
 
-router.post('/create', async (_req, _res) => {
+router.put('/create', async (_req, _res) => {
     try {
         const result = await prisma.user.create({
             data: {
