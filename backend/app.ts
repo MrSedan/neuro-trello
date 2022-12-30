@@ -4,6 +4,7 @@ import multer from 'multer';
 import * as crypto from 'crypto';
 import { Prisma, PrismaClient } from '@prisma/client';
 import user from './views/user';
+import morgan from 'morgan';
 import cors from 'cors';
 
 const storage: multer.StorageEngine = multer.diskStorage({
@@ -24,7 +25,8 @@ const port: number = 3500;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use(cors())
+app.use(cors());
+app.use(morgan('dev'));
 app.use('/user',user);
 
 
