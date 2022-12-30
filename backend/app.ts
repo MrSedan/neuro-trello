@@ -1,6 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import multer from 'multer';
+import * as crypto from 'crypto';
+import { Prisma, PrismaClient } from '@prisma/client';
+import user from './views/user';
 
 const storage: multer.StorageEngine = multer.diskStorage({
    destination: (_req, _file, _cb) => {
@@ -13,6 +16,7 @@ const storage: multer.StorageEngine = multer.diskStorage({
 
 const app: express.Application = express();
 const upload: multer.Multer = multer({storage: storage});
+const prisma = new PrismaClient()
 
 const port: number = 3500;
 

@@ -7,3 +7,8 @@ uploads/
 # Local env files
 .env.local
 .env.*.local
+
+# DB files
+migrations
+*.db
+*.db-journal
