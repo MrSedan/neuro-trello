@@ -4,6 +4,7 @@ import multer from 'multer';
 import * as crypto from 'crypto';
 import { Prisma, PrismaClient } from '@prisma/client';
 import user from './views/user';
+import cors from 'cors';
 
 const storage: multer.StorageEngine = multer.diskStorage({
    destination: (_req, _file, _cb) => {
@@ -23,7 +24,11 @@ const port: number = 3500;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(cors())
 app.use('/user',user);
+
+
+app.set('Access-Control-Allow-Origin', '*');
 
 app.get('/', (_req, _res) => {
     _res.status(200).send({"status": "ok"});
