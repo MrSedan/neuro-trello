@@ -23,6 +23,7 @@ const port: number = 3500;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use('/user',user);
 
 app.get('/', (_req, _res) => {
     _res.status(200).send({"status": "ok"});
