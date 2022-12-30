@@ -5,11 +5,12 @@ const router = Router();
 const prisma = new PrismaClient();
 
 router.put('/create', async (_req, _res) => {
+    const { username, pass_hash } = _req.body
     try {
         const result = await prisma.user.create({
             data: {
-                username: "aaa",
-                pass_hash: "bbb",
+                username: username,
+                pass_hash: pass_hash,
                 salt: "qqq"
             }
         })
