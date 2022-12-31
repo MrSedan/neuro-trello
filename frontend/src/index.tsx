@@ -1,22 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import HomePage from './views/Home';
+import PageNotFound from './views/404';
+import CreateUserPage from './views/CreateUser';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-function tick(){
-  root.render(
+root.render(
   <React.StrictMode>
-    <App/>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<HomePage/>}/>
+        <Route path='/404' element={<PageNotFound/>}/>
+        <Route path='/createuser' element={<CreateUserPage/>}/>
+        <Route path='*' element={<Navigate to='/404'/>}/>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
-  }
-setInterval(tick, 1000);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log);
