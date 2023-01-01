@@ -6,7 +6,7 @@ class HomePage extends React.Component {
         return (
             <div>
                 <h1>Test</h1>
-                <Link to="/createuser">To user</Link>
+                <Link to="/user/create">To user</Link>
             </div>
         );
     }
