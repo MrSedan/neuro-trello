@@ -5,7 +5,7 @@ class LoginUserPage extends React.Component {
     password?: string
     username?: string
     login() {
-        axios.post()
+        // axios.post()
     }
     render() {
         return (
