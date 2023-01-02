@@ -6,7 +6,15 @@ const router = Router();
 const prisma = new PrismaClient();
 
 router.put('/create', async (_req, _res) => {
-    const { username, password } = _req.body
+    let username = '';
+    let password = '';
+    try{
+        username = _req.body.username;
+        password = _req.body.password;
+    } catch (error){
+        _res.send(400).json({error: "bad request"})
+        return
+    }
     const salt = crypto.randomBytes(16).toString('hex');
     const pass_hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
     try {
@@ -41,4 +49,36 @@ router.get('/get/:id', async (_req, _res) => {
     }
 })
 
-export default router
+router.post('/login', async (_req, _res) => {
+    let username = '';
+    let password = '';
+    try{
+        username = _req.body.username;
+        password = _req.body.password;
+    } catch (error){
+        _res.send(400).json({error: "bad request"})
+        return
+    }
+    const user = await prisma.user.findUnique({
+        where: {
+            username: username
+        }
+    })
+    if (user){
+        if (validPassword(password, user.pass_hash, user.salt)){
+            _res.status(200).json({status: "ok"});
+        } else {
+            _res.status(401).json({error: "Invalid password or username"})
+        }
+    } else {
+        _res.status(401).json({error: "Invalid password or username"})
+    }
+
+})
+
+function validPassword(password: string, pass_hash: string, salt: string): boolean {
+    const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
+    return hash === pass_hash;
+}
+
+export default router;
