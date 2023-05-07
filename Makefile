@@ -13,7 +13,6 @@ build_dev:
 	docker-compose -f docker-compose.dev.yml build
 
 stop:
-	docker-compose stop
 	docker-compose -f docker-compose.dev.yml stop
 
 down:
