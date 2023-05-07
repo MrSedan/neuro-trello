@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  frontend:
+    build: ./frontend
+    container_name: frontend_neuro_trello_dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    networks:
+      - labnet
+    ports:
+      - 3000:3000
+  backend:
+    build: ./backend
+    container_name: backend_neuro_trello_dev
+    stdin_open: true
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - /app/prisma/migrations
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - labnet
+    ports:
+      - 3500:3500
+networks:
+  labnet:
