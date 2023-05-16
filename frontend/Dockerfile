@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as builder
 
 WORKDIR /app
 
@@ -10,6 +10,16 @@ RUN pnpm install --frozen-lockfile
 
 COPY . . 
 
-EXPOSE 3000
+RUN pnpm build
 
-CMD ["pnpm", "start"]
+FROM nginx:alpine
+
+COPY --from=builder /app/build /usr/share/nginx/html
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
