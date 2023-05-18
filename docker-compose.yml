@@ -3,23 +3,14 @@ services:
   frontend:
     build: 
       context: ./frontend
-      dockerfile: Dockerfile.dev
-    container_name: frontend_neuro_trello_dev
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    tty: true
+    container_name: frontend_neuro_trello
     networks:
       - labnet
     ports:
-      - 3000:3000
+      - 80:80
   backend:
     build: ./backend
-    container_name: backend_neuro_trello_dev
-    stdin_open: true
+    container_name: backend_neuro_trello
     volumes:
       - ./backend:/app
       - /app/node_modules

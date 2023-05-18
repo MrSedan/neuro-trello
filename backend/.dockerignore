@@ -1,3 +1,4 @@
 **/*.db
 **/*.db-journal
 **/migrations
+node_modules
