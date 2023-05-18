@@ -8,6 +8,8 @@ services:
       - labnet
     ports:
       - 80:80
+    depends_on:
+      - backend
   backend:
     build: ./backend
     container_name: backend_neuro_trello
