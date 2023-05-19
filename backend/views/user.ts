@@ -1,35 +1,25 @@
-import {Router} from 'express';
-import { PrismaClient } from '@prisma/client';
-import * as crypto from 'crypto';
-
+import { Router } from "express";
+import { config as dotenv_config } from "dotenv";
 const router = Router();
-const prisma = new PrismaClient();
 
-router.put('/create', async (_req, _res) => {
-    let username = '';
-    let password = '';
-    try{
-        username = _req.body.username;
-        password = _req.body.password;
-    } catch (error){
-        _res.send(400).json({error: "bad request"})
-        return
-    }
-    const salt = crypto.randomBytes(16).toString('hex');
-    const pass_hash = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
+dotenv_config();
+dotenv_config({ path: ".env.local", override: true });
+
+router.post("/login", async (_req, _res) => {
+    let password = "";
     try {
-        const result = await prisma.user.create({
-            data: {
-                username: username,
-                pass_hash: pass_hash,
-                salt: salt
-            }
-        })
-        _res.status(201).json(result)
-    } catch(error) {
-        _res.status(400).json({error: error})
+        password = _req.body.password;
+    } catch {
+        _res.status(400).json({ error: "bad request" });
+        return;
     }
-})
+    if (password === process.env.PASSWORD) {
+        _res.status(200).json({ status: "ok" });
+        return;
+    } else {
+        _res.status(403).json({ error: "bad password" });
+    }
+});
 
 //? For user create/login via username & password
 /*
@@ -38,7 +28,7 @@ router.get("/get/:id", async (_req, _res) => {
     const result = await prisma.user.findUnique({
         where: {
             id: Number(id),
-        }, 
+        },
         select: {
             id: true,
             username: true,
@@ -59,7 +49,7 @@ router.put("/create", async (_req, _res) => {
     } catch (error) {
         _res.send(400).json({ error: "bad request" });
         return;
-        }
+    }
     const salt = crypto.randomBytes(16).toString("hex");
     const pass_hash = crypto
         .pbkdf2Sync(password, salt, 1000, 64, `sha512`)
