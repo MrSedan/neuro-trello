@@ -10,11 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  username String @unique
-  pass_hash String 
-  salt String
 
-  @@map(name: "users")
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+  Task Task[]
+
+  @@map(name: "categories")
+}
+
+model Task {
+  id         Int      @id @default(autoincrement())
+  name       String
+  category   Category @relation(references: [id], fields: [categoryId])
+  categoryId Int
+
+  @@map(name: "tasks")
 }
