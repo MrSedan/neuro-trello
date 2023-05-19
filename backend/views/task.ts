@@ -50,4 +50,18 @@ router.post("/move", async (_req, _res) => {
     }
 });
 
+router.post("/delete", async (_req, _res) => {
+    const id = _req.body.id;
+    try {
+        const result = await prisma.task.delete({
+            where: {
+                id: id,
+            },
+        });
+        _res.status(200).json(result);
+    } catch (error) {
+        _res.status(500).json({ error: error });
+    }
+});
+
 export default router;
