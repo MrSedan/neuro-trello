@@ -1,21 +1,34 @@
-import axios from "axios";
-import React from "react";
+import { AxiosError } from "axios";
+import axios from "../../tools/api";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-class LoginUserPage extends React.Component {
-    password?: string
-    username?: string
-    login() {
-        // axios.post()
+export default function LoginUserPage() {
+    const navigate = useNavigate();
+    const inputRef = useRef<HTMLInputElement>(null);
+    async function login() {
+        const password = inputRef.current?.value || "";
+        console.log(process.env.REACT_APP_BASE_URL);
+
+        try {
+            await axios.post("/user/login", {
+                password: password,
+            });
+            localStorage.setItem("Password", password);
+            console.log("Saved pass");
+            navigate("/test");
+        } catch (error) {
+            if ((error as AxiosError).response)
+                console.log((error as AxiosError).response!.status);
+            else console.error("Error", error);
+            localStorage.removeItem("Password");
+            console.log("Deleted pass");
+        }
     }
-    render() {
-        return (
-            <div>
-                <input type="text" onChange={(event)=>this.username=event.target.value}/>
-                <input type="password" onChange={(event)=>this.password=event.target.value}/>
-                <button></button>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <input type="password" ref={inputRef} />
+            <button onClick={login}>Login</button>
+        </div>
+    );
 }
-
-export default LoginUserPage;
