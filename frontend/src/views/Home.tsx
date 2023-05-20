@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../assets/home.css";
 
 function HomePage() {
@@ -7,8 +7,7 @@ function HomePage() {
         <div
             className="homePage"
             onClick={() => {
-                console.log("aboba");
-                navigate("/user/create");
+                navigate("/test");
             }}
         >
             <h1>Welcome to Neuro-Trello</h1>
