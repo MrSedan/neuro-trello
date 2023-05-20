@@ -13,11 +13,6 @@ services:
   backend:
     build: ./backend
     container_name: backend_neuro_trello
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-      - /app/prisma/migrations
-      - /app/build
     environment:
       - CHOKIDAR_USEPOLLING=true
     networks:
