@@ -1,4 +1,3 @@
-**/*.db
-**/*.db-journal
-**/migrations
+**/*.db*
 node_modules
+.env.local
