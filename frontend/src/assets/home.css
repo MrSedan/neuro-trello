@@ -9,11 +9,14 @@
     border-radius: 30px;
     box-shadow: 10px 8px rgba(0, 0, 0, 0.1);
     transition: 0.3s ease-in-out;
-    height: 30vh;
+    height: 25vh;
+    width: 30vw;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    cursor: pointer;
+    user-select: none;
 }
 
 .homePage:hover {
@@ -30,3 +33,4 @@
 .homePage > a {
     font-size: 1em;
 }
+
