@@ -12,6 +12,12 @@ run_dev:
 build_dev:
 	docker-compose -f docker-compose.dev.yml build
 
+restart_dev:
+	make down && make run_dev
+
+restart:
+	make down && make run
+
 stop:
 	docker-compose stop && docker-compose -f docker-compose.dev.yml stop
 
