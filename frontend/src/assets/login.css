@@ -1,59 +1,59 @@
 * {
-  transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 .entryField {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  background-color: #f19066;
-  padding: 2rem;
-  border-radius: 30px;
-  box-shadow: 10px 8px rgba(0, 0, 0, 0.1);
-  transition: 0.3s ease-in-out;
-  height: 25vh;
-  width: 30vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-width:300px;
-  min-height: 177.25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #f19066;
+    padding: 2rem;
+    border-radius: 30px;
+    box-shadow: 10px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+    height: 25vh;
+    width: 30vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 300px;
+    min-height: 177.25px;
 }
-.error{
+.error {
     position: absolute;
     background: #e15f41;
-    color:white;
+    color: white;
     font-size: 16pt;
 }
 .entryField > h1 {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 .entryField > input {
-  padding-left: 0.5vw;
-  height: 2rem;
-  /* line-height: 2rem; */
-  width: 15vw;
-  font-size: 28pt;
-  border: #f5cd79;
-  background: white;
-  border-radius: 15px;
-  min-width:130px;
-  min-height: 32px;
+    padding-left: 0.5vw;
+    height: 2rem;
+    /* line-height: 2rem; */
+    width: 15vw;
+    font-size: 28pt;
+    border: #f5cd79;
+    background: white;
+    border-radius: 15px;
+    min-width: 130px;
+    min-height: 32px;
 }
 .entryField > button {
-  margin-top: 2rem;
-  height: 3vh;
-  width: 5vw;
-  border: #f5cd79;
-  background: #f5cd79;
-  border-radius: 15px;
-  cursor: pointer;
-  min-width:75px;
-  min-height: 32px;
+    margin-top: 2rem;
+    height: 3vh;
+    width: 5vw;
+    border: #f5cd79;
+    background: #f5cd79;
+    border-radius: 15px;
+    cursor: pointer;
+    min-width: 75px;
+    min-height: 32px;
 }
 .entryField > button:hover {
-  width: 7vw;
-  min-width:100px;
+    width: 7vw;
+    min-width: 100px;
 }

@@ -1,9 +1,18 @@
 {
     "semi": true,
     "tabWidth": 4,
-    "printWidth": 100,
+    "printWidth": 120,
     "singleQuote": false,
     "trailingComma": "all",
     "jsxSingleQuote": true,
-    "bracketSpacing": true
+    "bracketSpacing": true,
+    "overrides": [
+        {
+            "files": [
+                "**/*.tsx",
+                "**/*.ts",
+                "**/*.css"
+            ]
+        }
+    ]
 }

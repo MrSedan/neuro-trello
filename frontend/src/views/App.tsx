@@ -12,18 +12,18 @@ import ProtectedRoutes from "../tools/hasAccess";
 function App() {
     return (
         <div>
-            <h1 className="title">Neuro Trello</h1>
+            <h1 className='title'>Neuro Trello</h1>
             <BrowserRouter>
                 <Routes>
                     <Route index element={<HomePage />} />
-                    <Route path="404" element={<PageNotFound />} />
-                    <Route path="login" element={<LoginUserPage />} />
+                    <Route path='404' element={<PageNotFound />} />
+                    <Route path='login' element={<LoginUserPage />} />
                     <Route element={<ProtectedRoutes />}>
-                        <Route path="test" element={<TestPage />} />
+                        <Route path='test' element={<TestPage />} />
                     </Route>
                     {/* <Route path="user/create" element={<CreateUserPage />} />
                         <Route path="user/get/:id" element={<GetUserPage />} /> */}
-                    <Route path="*" element={<Navigate to="/404" />} />
+                    <Route path='*' element={<Navigate to='/404' />} />
                 </Routes>
             </BrowserRouter>
         </div>
