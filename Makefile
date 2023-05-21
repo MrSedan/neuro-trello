@@ -26,3 +26,6 @@ down:
 
 migrate:
 	cd backend && pnpm exec prisma migrate deploy && dotenv -e .env.local -- pnpm exec prisma migrate dev
+
+install:
+	cd backend && pnpm i --frozen-lockfile && cd ../frontend && pnpm i --frozen-lockfile 
