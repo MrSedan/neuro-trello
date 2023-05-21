@@ -4,36 +4,49 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../assets/login.css";
 export default function LoginUserPage() {
-  const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState("");
-  async function login() {
-    const password = inputRef.current?.value || "";
-    console.log(process.env.REACT_APP_BASE_URL);
-    try {
-      await axios.post("/user/login", {
-        password: password,
-      });
-      localStorage.setItem("Password", password);
-      console.log("Saved pass");
+    const navigate = useNavigate();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [error, setError] = useState("");
+    async function login() {
+        const password = inputRef.current?.value || "";
+        console.log(process.env.REACT_APP_BASE_URL);
+        setError("");
+        try {
+            await axios.post("/user/login", {
+                password: password,
+            });
+            localStorage.setItem("Password", password);
+            console.log("Saved pass");
             navigate("/board");
-    } catch (error) {
-      if ((error as AxiosError).response)
-        console.log((error as AxiosError).response!.status);
-      else console.error("Error", error);
-      localStorage.removeItem("Password");
-      console.log("Deleted pass");
-      setError("Error!");
+        } catch (error) {
+            if ((error as AxiosError).response) {
+                console.log((error as AxiosError).response!.status, "wrong pass");
+                setError("Wrong pass!");
+            } else {
+                console.error("Error", error);
+                setError("Something went wrong!");
+            }
+            localStorage.removeItem("Password");
+            console.log("Deleted pass");
+        }
     }
-  }
-  return (
-    <div className="login">
-      {error !== "" && <div className="error">{error}</div>}
-      <div className="entryField">
-        <h1>Login</h1>
-        <input type="password" ref={inputRef} />
-        <button onClick={login}>Login</button>
-      </div>
-    </div>
-  );
+    return (
+        <div className='login'>
+            <div className='entryField'>
+                <h1>Login</h1>
+                <input
+                    type='password'
+                    ref={inputRef}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") login();
+                    }}
+                    placeholder='Password'
+                />
+                <button onClick={login} type='submit'>
+                    Login
+                </button>
+            </div>
+            <div className={`error ${error !== "" ? "active" : ""}`}>{error}</div>
+        </div>
+    );
 }
