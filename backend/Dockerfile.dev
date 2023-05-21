@@ -10,13 +10,9 @@ RUN pnpm install --frozen-lockfile
 
 COPY prisma ./prisma/
 
-RUN pnpm exec prisma generate
-
 COPY . . 
-
-RUN pnpm store prune
-
-RUN rm -rf /etc/apk/cache
+RUN npm i -g dotenv-cli
+RUN dotenv -e .env.local -- pnpm exec prisma generate
 
 EXPOSE 3500
 
