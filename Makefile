@@ -17,3 +17,6 @@ stop:
 
 down:
 	docker-compose -f docker-compose.dev.yml down
+
+migrate:
+	cd backend && pnpm exec prisma migrate deploy && dotenv -e .env.local -- pnpm exec prisma migrate dev
