@@ -9,6 +9,5 @@ uploads/
 .env.*.local
 
 # DB files
-migrations
 *.db
 *.db-journal
