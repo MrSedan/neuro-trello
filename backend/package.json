@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "nodemon app.ts",
     "dev": "NODE_ENV=development nodemon app.ts",
-    "start:migrate:prod": "prisma migrate deploy && node app.js"
+    "start:migrate:prod": "prisma generate && node app.js"
   },
   "author": "",
   "license": "ISC",
