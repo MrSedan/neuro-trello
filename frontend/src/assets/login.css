@@ -42,6 +42,12 @@
     min-width: 130px;
     min-height: 32px;
 }
+
+.entryField > input::-ms-reveal,
+.entryField > input::-ms-clear {
+    display: none;
+}
+
 .entryField > button {
     margin-top: 2rem;
     height: 3vh;
