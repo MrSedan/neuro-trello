@@ -7,11 +7,11 @@ function HomePage() {
         <div
             className='homePage'
             onClick={() => {
-                navigate("/test");
+                navigate("/board");
             }}
         >
             <h1>Welcome to Neuro-Trello</h1>
-            <h3>Click to go to user login and create</h3>
+            <h3>Click to go to board</h3>
         </div>
     );
 }

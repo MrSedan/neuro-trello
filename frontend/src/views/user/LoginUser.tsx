@@ -16,7 +16,7 @@ export default function LoginUserPage() {
       });
       localStorage.setItem("Password", password);
       console.log("Saved pass");
-      navigate("/test");
+            navigate("/board");
     } catch (error) {
       if ((error as AxiosError).response)
         console.log((error as AxiosError).response!.status);

@@ -1,14 +1,12 @@
-import React from "react";
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import HomePage from "./Home";
 import PageNotFound from "./404";
-import TestPage from "./Test";
+import BoardPage from "./BoardPage";
 // import CreateUserPage from "./user/CreateUser";
 // import GetUserPage from "./user/GetUser";
 import "../assets/main.css";
 import LoginUserPage from "./user/LoginUser";
 import ProtectedRoutes from "../tools/hasAccess";
-
 function App() {
     return (
         <div>
@@ -19,7 +17,7 @@ function App() {
                     <Route path='404' element={<PageNotFound />} />
                     <Route path='login' element={<LoginUserPage />} />
                     <Route element={<ProtectedRoutes />}>
-                        <Route path='test' element={<TestPage />} />
+                        <Route path='board' element={<BoardPage />} />
                     </Route>
                     {/* <Route path="user/create" element={<CreateUserPage />} />
                         <Route path="user/get/:id" element={<GetUserPage />} /> */}

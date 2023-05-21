@@ -7,7 +7,7 @@ interface category {
     name: string;
 }
 
-function TestPage() {
+function BoardPage() {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<category[]>([]);
     useEffect(() => {
@@ -40,7 +40,7 @@ function TestPage() {
                 Reset Password
             </button>
             <br />
-            <Link to="/">Go back</Link>
+            <Link to='/'>Go back</Link>
             {categories &&
                 categories.map((item) => {
                     return (
@@ -53,4 +53,4 @@ function TestPage() {
     );
 }
 
-export default TestPage;
+export default BoardPage;
