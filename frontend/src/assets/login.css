@@ -1,46 +1,71 @@
 * {
     transition: 0.3s ease-in-out;
 }
+
+.login {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .entryField {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
     background-color: #f19066;
     padding: 2rem;
     border-radius: 30px;
     box-shadow: 10px 8px rgba(0, 0, 0, 0.1);
     transition: 0.3s ease-in-out;
-    height: 25vh;
+    height: 28vh;
     width: 30vw;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    min-width: 300px;
+    min-width: 400px;
     min-height: 177.25px;
 }
+
 .error {
-    position: absolute;
     background: #e15f41;
     color: white;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 16pt;
+    line-height: 1.5em;
+    visibility: hidden;
+    margin: 2rem 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: top 0.5s linear;
 }
-.entryField > h1 {
-    margin-bottom: 2rem;
+
+.error.active {
+    visibility: visible;
+    z-index: -9999;
+    top: 43%;
+    opacity: 1;
 }
+
 .entryField > input {
-    padding-left: 0.5vw;
+    padding-left: 10px;
     height: 2rem;
-    /* line-height: 2rem; */
+    line-height: 2rem;
+    vertical-align: middle;
     width: 15vw;
-    font-size: 28pt;
+    font-size: 1.5em;
     border: #f5cd79;
     background: white;
     border-radius: 15px;
-    min-width: 130px;
+    min-width: 200px;
     min-height: 32px;
+}
+
+.entryField > input:focus {
+    outline: none;
 }
 
 .entryField > input::-ms-reveal,
@@ -48,11 +73,18 @@
     display: none;
 }
 
+.entryField > input::placeholder {
+    font-size: 1rem;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .entryField > button {
-    margin-top: 2rem;
     height: 3vh;
     width: 5vw;
-    border: #f5cd79;
+    border: none;
     background: #f5cd79;
     border-radius: 15px;
     cursor: pointer;
@@ -62,4 +94,12 @@
 .entryField > button:hover {
     width: 7vw;
     min-width: 100px;
+}
+
+.entryField > button:focus {
+    outline: none;
+}
+
+.entryField > button:active {
+    background: #e15f41;
 }
