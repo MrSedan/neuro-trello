@@ -1,25 +1,33 @@
 import { Router } from "express";
 import { config as dotenv_config } from "dotenv";
+import { Server } from "socket.io";
 const router = Router();
 
 dotenv_config();
 dotenv_config({ path: ".env.local", override: true });
 
-router.post("/login", async (_req, _res) => {
-    let password = "";
-    try {
-        password = _req.body.password;
-    } catch {
-        _res.status(400).json({ error: "bad request" });
-        return;
-    }
-    if (password === process.env.PASSWORD) {
-        _res.status(200).json({ status: "ok" });
-        return;
-    } else {
-        _res.status(403).json({ error: "bad password" });
-    }
-});
+export default function (io: Server) {
+    router.get("/", (_req, _res) => {
+        io.emit("userConnected", "A user has connected");
+        _res.send("User page");
+    });
+    router.post("/login", async (_req, _res) => {
+        let password = "";
+        try {
+            password = _req.body.password;
+        } catch {
+            _res.status(400).json({ error: "bad request" });
+            return;
+        }
+        if (password === process.env.PASSWORD) {
+            _res.status(200).json({ status: "ok" });
+            return;
+        } else {
+            _res.status(403).json({ error: "bad password" });
+        }
+    });
+    return router;
+}
 
 //? For user create/login via username & password
 /*
@@ -92,5 +100,3 @@ router.post("/login", async (_req, _res) => {
         _res.status(401).json({ error: "Invalid password or username" });
     }
 });*/
-
-export default router;
