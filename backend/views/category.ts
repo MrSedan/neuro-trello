@@ -20,6 +20,7 @@ router.post("/new", async (_req, _res) => {
     let name = "";
     try {
         name = _req.body.name;
+        if (name == "") throw 1;
     } catch {
         return _res.status(400).json({ error: "no name given" });
     }
