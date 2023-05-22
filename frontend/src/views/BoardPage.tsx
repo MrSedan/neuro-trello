@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../tools/api";
+import "../assets/board.css";
 
 interface category {
     id: number;
@@ -30,25 +31,38 @@ function BoardPage() {
     }, []);
     return (
         <div>
-            <h1>This is a test page</h1>
+            <div className='menu'>
+                <h1>Categories page</h1>
+                <button
+                    onClick={() => {
+                        localStorage.removeItem("Password");
+                        navigate("/login", { replace: true });
+                    }}
+                >
+                    Log Out
+                </button>
+                <br />
+                <Link to='/'>Go back</Link>
+                <br />
+            </div> 
             <button
-                onClick={() => {
-                    localStorage.removeItem("Password");
-                    navigate("/login", { replace: true });
-                }}
-            >
-                Reset Password
-            </button>
-            <br />
-            <Link to='/'>Go back</Link>
-            {categories &&
-                categories.map((item) => {
-                    return (
-                        <div key={item.id}>
-                            <h2>{item.name}</h2>
-                        </div>
-                    );
-                })}
+                    onClick={() => {
+
+                    }}
+                > 
+                <h2>New</h2> 
+                </button>
+            <div className='desk'>
+
+                {categories &&
+                    categories.map((item) => {
+                        return (
+                            <div key={item.id} className='card' >
+                                <h2>{item.name}</h2>
+                            </div>
+                        );
+                    })}
+            </div>
         </div>
     );
 }

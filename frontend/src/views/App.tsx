@@ -26,7 +26,7 @@ function App() {
                     </Route>
                     {/* <Route path="user/create" element={<CreateUserPage />} />
                         <Route path="user/get/:id" element={<GetUserPage />} /> */}
-                    <Route path='*' element={<Navigate to='/404' />} />
+                    <Route path='*' element={<Navigate to='/404' replace />} />
                 </Routes>
             </BrowserRouter>
         </div>

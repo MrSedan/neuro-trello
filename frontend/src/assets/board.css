@@ -1,0 +1,33 @@
+.menu{
+    display: flex;
+    background:#f7d794;
+}
+.menu > button{
+    width: 5em;
+    height: 3em;
+}
+.desk{
+    display: flex;
+    background:#f7d794;
+    width: auto;
+    overflow-x: scroll;
+    margin: 5px;
+    padding-bottom: 2em;
+}
+.card{
+    display: inline-flex;
+    flex-wrap: nowrap;    
+}
+.card > h2{
+    border-radius: 10px;
+    background: white;
+    margin: 4px;
+    padding: 4px;
+    min-width: 15vw;
+    max-width: 15vw;
+    min-height: 10vh;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: auto;
+}
