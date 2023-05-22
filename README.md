@@ -1,7 +1,5 @@
 # Neuro-trello
 
-## Only dev mode available now
-
 To run this project you need to have `docker` and `docker-compose` installed and then run this commands:
 
 -   Build containers
