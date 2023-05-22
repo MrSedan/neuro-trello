@@ -8,6 +8,7 @@ import morgan from "morgan";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
+import { PrismaClient } from "@prisma/client";
 
 const storage: multer.StorageEngine = multer.diskStorage({
     destination: (_req, _file, _cb) => {
@@ -18,6 +19,8 @@ const storage: multer.StorageEngine = multer.diskStorage({
     },
 });
 
+const prisma = new PrismaClient();
+
 const app: express.Application = express();
 const upload: multer.Multer = multer({ storage: storage });
 const server = http.createServer(app);
@@ -25,6 +28,8 @@ const io = new Server(server, {
     cors: {
         origin: "*",
     },
+    // transports: ["polling"],
+    // pingTimeout: 180000,
 });
 
 const port: number = 3500;
@@ -36,7 +41,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use("/user", user(io));
 app.use("/category", category);
-app.use("/task", task);
+app.use("/task", task(io));
 
 app.set("Access-Control-Allow-Origin", "*");
 
@@ -49,10 +54,19 @@ app.post("/profile", upload.single("avatar"), (_req, _res, _next) => {
     _res.json(_req.body);
 });
 
-io.use((socket, next) => {
+interface MyError extends Error {
+    data: any;
+}
+
+io.use(async (socket, next) => {
     const pass = socket.handshake.auth.pass;
-    if (pass !== process.env.PASSWORD) return next(new Error("Не найден токен"));
-    return next();
+    console.log("Someone trying to connect with pass", pass);
+    if (pass === process.env.PASSWORD) {
+        return next();
+    }
+    const err = new Error("bad pass") as MyError;
+    err.data = { type: "Wrong pass" };
+    return await next(err);
 });
 
 io.on("connection", (socket) => {
@@ -60,6 +74,7 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("user disconnected");
+        socket.removeAllListeners();
     });
     socket.on("message", (message) => {
         console.log("Client sent message:", message);
@@ -67,6 +82,10 @@ io.on("connection", (socket) => {
     });
     socket.on("userConnected", (message) => {
         console.log(message);
+    });
+    socket.on("get_tasks", async () => {
+        const tasks = await prisma.task.findMany();
+        socket.emit("tasks", tasks);
     });
 });
 
