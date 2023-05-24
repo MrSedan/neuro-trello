@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import axios from "../tools/api";
 import "../assets/board.css";
+import ModalCreate from "./ModalCreate";
 
 interface category {
     id: number;
@@ -15,10 +16,15 @@ interface task {
 }
 function BoardPage() {
     const navigate = useNavigate();
-    const inputRef = useRef<HTMLInputElement>(null);
+    const catInputRef = useRef<HTMLInputElement>(null);
+    const taskInputRef = useRef<HTMLInputElement>(null);
     const [categories, setCategories] = useState<category[]>([]);
     const [tasks, setTasks] = useState<task[]>([]);
-    const dialogRef = useRef<HTMLDialogElement>(null);
+    const [categoryId, setCatId] = useState(0);
+    const [openCreateCategory, setOpenCreateCategory] = useState(false);
+    const [openCreateTask, setOpenCreateTask] = useState(false);
+    const catDialogRef = useRef<HTMLDialogElement>(null);
+    const taskDialogRef = useRef<HTMLDialogElement>(null);
     const getCateg = async () => {
         const pass = localStorage.getItem("Password") || "";
         try {
@@ -54,7 +60,7 @@ function BoardPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     async function createCategory() {
-        const categoryName = inputRef.current?.value || "";
+        const categoryName = catInputRef.current?.value || "";
         const pass = localStorage.getItem("Password") || "";
         try {
             await axios.post(
@@ -68,7 +74,30 @@ function BoardPage() {
             );
             console.log("Category Created!");
             getCateg();
-            if (dialogRef.current) dialogRef.current.style.visibility = "hidden";
+            if (catDialogRef.current) catDialogRef.current.style.visibility = "hidden";
+        } catch (error) {
+            if ((error as AxiosError).response) {
+                console.error("Error", error);
+            }
+        }
+    }
+    async function createTask(catId: number) {
+        const taskName = taskInputRef.current?.value || "";
+        const pass = localStorage.getItem("Password") || "";
+        try {
+            await axios.post(
+                "/task/new",
+                {
+                    name: taskName,
+                    category_id: catId,
+                },
+                {
+                    headers: { Authorization: pass },
+                },
+            );
+            console.log("Task Created!");
+            getTask();
+            if (taskDialogRef.current) taskDialogRef.current.style.visibility = "hidden";
         } catch (error) {
             if ((error as AxiosError).response) {
                 console.error("Error", error);
@@ -91,27 +120,27 @@ function BoardPage() {
                 <Link to='/'>Go back</Link>
                 <br />
             </div>
-            <dialog open className='popUp' ref={dialogRef} style={{ visibility: "hidden" }}>
-                <h1>Create new Category</h1>
-                <button
-                    onClick={() => {
-                        if (dialogRef.current) dialogRef.current.style.visibility = "hidden";
-                    }}
-                >
-                    Cancel
-                </button>
-                <input
-                    ref={inputRef}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") createCategory();
-                    }}
-                    placeholder='Category name'
+            {openCreateCategory ? (
+                <ModalCreate
+                    name='Category'
+                    setOpen={setOpenCreateCategory}
+                    onConfirm={createCategory}
+                    inputRef={catInputRef}
                 />
-                <button onClick={createCategory}>Confirm</button>
-            </dialog>
+            ) : null}
+            {openCreateTask ? (
+                <ModalCreate
+                    name='Task'
+                    setOpen={setOpenCreateTask}
+                    onConfirm={() => {
+                        createTask(categoryId);
+                    }}
+                    inputRef={taskInputRef}
+                />
+            ) : null}
             <button
                 onClick={() => {
-                    if (dialogRef.current) dialogRef.current.style.visibility = "visible";
+                    setOpenCreateCategory(true);
                 }}
             >
                 <h2>New</h2>
@@ -123,22 +152,28 @@ function BoardPage() {
                         return (
                             <div key={item.id} className='card'>
                                 <h2>{item.name}</h2>
+                                <button
+                                    onClick={() => {
+                                        setCatId(item.id);
+                                        setOpenCreateTask(true);
+                                    }}
+                                >
+                                    +
+                                </button>
                                 <hr />
                                 <div className='task'>
-                                    <p>
-                                        {tasks
-                                            .filter((task) => {
-                                                return task.categoryId === item.id;
-                                            })
-                                            .map((task) => {
-                                                return (
-                                                    <div key={task.id}>
-                                                        {task.name}
-                                                        <hr />
-                                                    </div>
-                                                );
-                                            })}
-                                    </p>
+                                    {tasks
+                                        .filter((task) => {
+                                            return task.categoryId === item.id;
+                                        })
+                                        .map((task) => {
+                                            return (
+                                                <div key={task.id}>
+                                                    {task.name}
+                                                    <hr />
+                                                </div>
+                                            );
+                                        })}
                                 </div>
                             </div>
                         );
