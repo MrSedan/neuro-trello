@@ -31,7 +31,7 @@ model Category {
 model Task {
   id         Int      @id @default(autoincrement())
   name       String
-  category   Category @relation(references: [id], fields: [categoryId])
+  category   Category @relation(references: [id], fields: [categoryId], onDelete: Cascade)
   categoryId Int
 
   @@map(name: "tasks")
