@@ -38,6 +38,33 @@ export default function (io: Server) {
         }
     });
 
+    router.post("/edit", async (_req, _res) => {
+        const id = _req.body.id;
+        const name = _req.body.name;
+        const description = _req.body.description;
+        if (
+            name == "" ||
+            id == "" ||
+            typeof id !== "number" ||
+            typeof name !== "string" ||
+            (typeof description !== "string" && description !== undefined)
+        )
+            return _res.status(400).json({ error: "no name or id given or bad types" });
+        try {
+            const result = await prisma.task.update({
+                where: { id: id },
+                data: {
+                    name: name,
+                    description: description,
+                },
+            });
+            io.emit("task_edit", result);
+            _res.status(200).json(result);
+        } catch (error) {
+            _res.status(500).send((error as Error).message);
+        }
+    });
+
     router.post("/move", async (_req, _res) => {
         const id = _req.body.id;
         const category_id = _req.body.category_id;
