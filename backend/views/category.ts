@@ -1,12 +1,11 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
-import { userMiddleware } from "./tools/middleware";
+import { Server } from "socket.io";
 
 const router = Router();
 const prisma = new PrismaClient();
 
-router.use(userMiddleware);
-
+export default function (io: Server) {
 router.get("/", async (_req, _res) => {
     try {
         const result = await prisma.category.findMany();
@@ -30,6 +29,7 @@ router.post("/new", async (_req, _res) => {
                 name: name,
             },
         });
+            io.emit("new_category", result);
         _res.status(201).json(result);
     } catch (error) {
         _res.status(400).json(error);
@@ -39,9 +39,7 @@ router.post("/new", async (_req, _res) => {
 router.post("/delete", async (_req, _res) => {
     let id: number | undefined;
     try {
-        id = _req.body.id;
-    } catch {
-        return _res.status(400).json({ error: "no id given" });
+            io.emit("category_edit", result);
     }
     try {
         const result = await prisma.category.delete({
@@ -49,6 +47,7 @@ router.post("/delete", async (_req, _res) => {
                 id: id,
             },
         });
+            io.emit("del_category", result);
         _res.status(200).json(result);
     } catch (error) {
         _res.status(500).json({ error: error });

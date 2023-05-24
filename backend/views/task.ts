@@ -50,6 +50,7 @@ export default function (io: Server) {
                     category: { connect: { id: category_id } },
                 },
             });
+            io.emit("move_task", result);
             _res.status(200).json(result);
         } catch (error) {
             _res.status(500).json({ error: error });
@@ -64,6 +65,7 @@ export default function (io: Server) {
                     id: id,
                 },
             });
+            io.emit("del_task", result);
             _res.status(200).json(result);
         } catch (error) {
             _res.status(500).json({ error: error });

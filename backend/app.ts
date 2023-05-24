@@ -87,6 +87,10 @@ io.on("connection", (socket) => {
         const tasks = await prisma.task.findMany();
         socket.emit("tasks", tasks);
     });
+    socket.on("get_categories", async () => {
+        const categories = await prisma.category.findMany();
+        socket.emit("categories", categories);
+    });
 });
 
 server.listen(port, () => {
