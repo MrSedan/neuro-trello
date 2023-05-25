@@ -45,13 +45,23 @@
     min-width: 200px;
     min-height: 32px;
 }
-.popUp > menu > button{
-    height: 3vh;
-    width: 5vw;
+.popUp > button{
+    position: absolute;
+    height: 4vh;
+    width: 6vw;
     border: none;
     background: #f5cd79;
     border-radius: 15px;
     cursor: pointer;
     min-width: 75px;
     min-height: 32px;
+    bottom: 15%;
+}
+
+#close{
+    height: 2vh;
+    width: 2vw;
+    position: absolute;
+    top: 5%;
+    right: 5%;
 }

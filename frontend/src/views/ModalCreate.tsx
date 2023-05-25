@@ -10,11 +10,12 @@ export default function ModalCreate({ name, setOpen, onConfirm, inputRef }: moda
         <dialog open className='popUp'>
             <h1>Create new {name}</h1>
             <button
+                id='close'
                 onClick={() => {
                     setOpen(false);
                 }}
             >
-                Cancel
+                X
             </button>
             <input
                 ref={inputRef}

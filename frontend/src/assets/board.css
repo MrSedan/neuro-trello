@@ -7,12 +7,25 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    justify-content: space-between;
     background: #f7d794;
 }
-.menu > button {
+.menu > div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+}
+button{
+    border-radius: 10px;
+    cursor: pointer;
+    border:none;
+}
+.menu > div > button{
     width: 5em;
     height: 3em;
 }
+
 .desk {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -21,7 +34,20 @@
     width: auto;
     overflow-x: scroll;
     margin: 5px;
+    height: 75vh;
     padding-bottom: 2em;
+    scrollbar-width: thin;
+    scrollbar-color: #d3b168 #c0a15e;
+
+}
+
+  
+#newCat{
+    border-radius: 10px;
+    width: 4em;
+    height: 2em;
+    background: #f19066;
+
 }
 .card {
     border-radius: 10px;
@@ -36,6 +62,19 @@
     overflow-y: scroll;
 }
 .card > h2{    
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+.card > button{
+    width: 100%;
+    padding: 1em 0;
+    background: none;
+    border: 2px solid rgba(0,0,0,0.15);
+    margin: 1em 0;
+}
+.task{
     white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;

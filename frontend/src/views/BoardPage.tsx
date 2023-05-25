@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import axios from "../tools/api";
 import "../assets/board.css";
@@ -108,17 +108,24 @@ function BoardPage() {
         <div>
             <div className='menu'>
                 <h1>Board</h1>
-                <button
-                    onClick={() => {
-                        localStorage.removeItem("Password");
-                        navigate("/login", { replace: true });
-                    }}
-                >
-                    Log Out
-                </button>
-                <br />
-                <Link to='/'>Go back</Link>
-                <br />
+                <div>
+                    <button
+                        onClick={() => {
+                            navigate("/", { replace: true });
+                        }}
+                    >
+                        Go back
+                    </button>
+                    <button
+                        style={{ background: "#e15f41", color: "white" }}
+                        onClick={() => {
+                            localStorage.removeItem("Password");
+                            navigate("/login", { replace: true });
+                        }}
+                    >
+                        Log Out
+                    </button>
+                </div>
             </div>
             {openCreateCategory ? (
                 <ModalCreate
@@ -139,6 +146,7 @@ function BoardPage() {
                 />
             ) : null}
             <button
+                id='newCat'
                 onClick={() => {
                     setOpenCreateCategory(true);
                 }}
