@@ -20,9 +20,9 @@ function App() {
                     <Route path='login' element={<LoginUserPage />} />
                     <Route element={<MySocketProvider />}>
                         <Route path='test' element={<TestPage />}></Route>
-                    </Route>
-                    <Route element={<ProtectedRoutes />}>
-                        <Route path='board' element={<BoardPage />} />
+                        <Route element={<ProtectedRoutes />}>
+                            <Route path='board' element={<BoardPage />} />
+                        </Route>
                     </Route>
                     {/* <Route path="user/create" element={<CreateUserPage />} />
                         <Route path="user/get/:id" element={<GetUserPage />} /> */}
