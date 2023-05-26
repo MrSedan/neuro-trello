@@ -1,62 +1,78 @@
-import { useRef, useEffect, useState } from "react";
+import { useContext, useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import axios from "../tools/api";
 import "../assets/board.css";
 import ModalCreate from "./ModalCreate";
+import ModalCategory from "./ModalCategory";
+import { Task, Category } from "./Interfaces";
+import { SocketContext } from "../context/socket";
 
 interface category {
     id: number;
     name: string;
 }
-interface task {
-    id: number;
-    name: string;
-    categoryId: number;
+interface MyError extends Error {
+    data: any;
 }
 function BoardPage() {
+    const { socket } = useContext(SocketContext);
     const navigate = useNavigate();
     const catInputRef = useRef<HTMLInputElement>(null);
     const taskInputRef = useRef<HTMLInputElement>(null);
     const [categories, setCategories] = useState<category[]>([]);
-    const [tasks, setTasks] = useState<task[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [categoryId, setCatId] = useState(0);
     const [openCreateCategory, setOpenCreateCategory] = useState(false);
     const [openCreateTask, setOpenCreateTask] = useState(false);
+    const [openModalCategory, setOpenModalCategory] = useState(false);
     const catDialogRef = useRef<HTMLDialogElement>(null);
     const taskDialogRef = useRef<HTMLDialogElement>(null);
-    const getCateg = async () => {
-        const pass = localStorage.getItem("Password") || "";
-        try {
-            const response = await axios.get("/category", {
-                headers: { Authorization: pass },
-            });
-            console.log(response.data);
-            setCategories(response.data);
-            return true;
-        } catch (error) {
-            console.error(error);
-            navigate("/login");
-        }
-    };
-    const getTask = async () => {
-        const pass = localStorage.getItem("Password") || "";
-        try {
-            const response = await axios.get("/task", {
-                headers: { Authorization: pass },
-            });
-            console.log(response.data);
-            setTasks(response.data);
-            return true;
-        } catch (error) {
-            console.error(error);
-            navigate("/login");
-        }
-    };
-
+    const [error, setError] = useState("");
     useEffect(() => {
-        getCateg();
-        getTask();
+        const onConnect = () => {
+            socket.emit("get_categories");
+            socket.emit("get_tasks");
+        };
+        const onDisconnect = () => {};
+        const onError = (error: Error) => {
+            console.log("Error:", error.message);
+            console.log((error as MyError).data);
+            if ((error as MyError).data) setError((error as MyError).data.type);
+        };
+        const onTasks = (tasks: Task[]) => {
+            setTasks(tasks);
+        };
+        const onNewTask = (task: Task) => {
+            if (tasks.indexOf(task) === -1) setTasks((previous) => [...previous, task]);
+        };
+        const onCategory = (categories: Category[]) => {
+            setCategories(categories);
+        };
+        const onNewCategory = (category: Category) => {
+            if (categories.indexOf(category) === -1) setCategories((previous) => [...previous, category]);
+        };
+        socket.on("connect", onConnect);
+        socket.on("disconnect", onDisconnect);
+        socket.on("connect_error", onError);
+        socket.on("tasks", onTasks);
+        socket.on("new_task", onNewTask);
+        socket.on("categories", onCategory);
+        socket.on("new_category", onNewCategory);
+        socket.on("error", onError);
+        return () => {
+            socket.off("connect", onConnect);
+            socket.off("disconnect", onDisconnect);
+            socket.off("connect_error", onError);
+            socket.off("tasks", onTasks);
+            socket.off("new_task", onNewTask);
+            socket.off("categories", onCategory);
+            socket.off("new_category", onNewCategory);
+            socket.off("error", onError);
+        };
+    }, [socket, categories, tasks]);
+    useEffect(() => {
+        socket.connect();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     async function createCategory() {
@@ -73,7 +89,6 @@ function BoardPage() {
                 },
             );
             console.log("Category Created!");
-            getCateg();
             if (catDialogRef.current) catDialogRef.current.style.visibility = "hidden";
         } catch (error) {
             if ((error as AxiosError).response) {
@@ -96,7 +111,6 @@ function BoardPage() {
                 },
             );
             console.log("Task Created!");
-            getTask();
             if (taskDialogRef.current) taskDialogRef.current.style.visibility = "hidden";
         } catch (error) {
             if ((error as AxiosError).response) {
@@ -145,6 +159,9 @@ function BoardPage() {
                     inputRef={taskInputRef}
                 />
             ) : null}
+
+            {/* TODO: {openModalCategory ? <ModalCategory catName='' setOpen={setOpenModalCategory} tasks={} /> : null} */}
+
             <button
                 id='newCat'
                 onClick={() => {
