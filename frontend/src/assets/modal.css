@@ -33,13 +33,26 @@
     border: none;
     z-index: 99999;
 }
-.popUp > input{
+.popUp > input {
     padding-left: 10px;
     height: 2rem;
     line-height: 2rem;
     vertical-align: middle;
     width: 15vw;
     font-size: 1.5em;
+    border: #f5cd79;
+    background: white;
+    border-radius: 15px;
+    min-width: 200px;
+    min-height: 32px;
+}
+.popUp > textarea {
+    padding-left: 10px;
+    height: 2rem;
+    line-height: 2rem;
+    vertical-align: middle;
+    width: 15vw;
+    font-size: 1em;
     border: #f5cd79;
     background: white;
     border-radius: 15px;
