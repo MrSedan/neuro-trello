@@ -1,16 +1,23 @@
+import { useEffect, useRef } from "react";
 import "../assets/modal.css";
-import { Task } from "./Interfaces";
+import { Category, Task } from "./Interfaces";
 
-interface modalCategoryProps {
-    type: string;
+interface modalEditProps {
+    item: Task | Category;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    tasks: Task[];
+    onConfirm: (item: Task | Category) => void;
 }
 
-export default function ModalEdit({ type, setOpen, tasks }: modalCategoryProps) {
+export default function ModalEdit({ item, setOpen, onConfirm }: modalEditProps) {
+    const nameInputRef = useRef<HTMLInputElement>(null);
+    const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
+    useEffect(() => {
+        if (nameInputRef.current) nameInputRef.current.value = item.name;
+        if (descriptionInputRef.current) descriptionInputRef.current.value = (item as Task).description || "";
+    }, [item, nameInputRef, descriptionInputRef]);
     return (
         <dialog open className='popUp'>
-            <h1>Edit {type}</h1>
+            <h1>Edit {item.name}</h1>
             <button
                 id='close'
                 onClick={() => {
@@ -19,15 +26,22 @@ export default function ModalEdit({ type, setOpen, tasks }: modalCategoryProps) 
             >
                 X
             </button>
-            {tasks.map((item) => {
-                return (
-                    <div key={item.id}>
-                        {item.name}
-                        <br />
-                        {item.description}
-                    </div>
-                );
-            })}
+            <input placeholder={item.name} ref={nameInputRef} />
+            {"categoryId" in item ? <textarea placeholder={item.description || ""} ref={descriptionInputRef} /> : null}
+            <button
+                id='confirm'
+                onClick={() => {
+                    const sendItem = structuredClone(item);
+                    sendItem.name = nameInputRef.current?.value || item.name;
+                    if ("categoryId" in item) {
+                        (sendItem as Task).description = item.description || descriptionInputRef.current?.value || "";
+                    }
+                    onConfirm(sendItem);
+                    setOpen(false);
+                }}
+            >
+                Confirm
+            </button>
         </dialog>
     );
 }

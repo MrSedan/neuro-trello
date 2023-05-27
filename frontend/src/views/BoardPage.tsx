@@ -26,6 +26,7 @@ function BoardPage() {
     const [openCreateCategory, setOpenCreateCategory] = useState(false);
     const [openCreateTask, setOpenCreateTask] = useState(false);
     const [openModalEdit, setOpenModalEdit] = useState(false);
+    const [editingItem, setEditingItem] = useState<Task | Category>();
     const catDialogRef = useRef<HTMLDialogElement>(null);
     const taskDialogRef = useRef<HTMLDialogElement>(null);
     const [error, setError] = useState("");
@@ -148,6 +149,20 @@ function BoardPage() {
             }
         }
     }
+    async function editItem(item: Category | Task) {
+        const pass = localStorage.getItem("Password") || "";
+        const url = "/" + ("categoryId" in item ? "task" : "category") + "/edit";
+        try {
+            await axios.post(url, item, {
+                headers: { Authorization: pass },
+            });
+            console.log("Item edited!");
+        } catch (error) {
+            if ((error as AxiosError).response) {
+                console.error("Error", error);
+            }
+        }
+    }
     return (
         <div>
             <div className='menu'>
@@ -190,7 +205,9 @@ function BoardPage() {
                 />
             ) : null}
 
-            {/* TODO: {openModalCategory ? <ModalCategory catName='' setOpen={setOpenModalCategory} tasks={} /> : null} */}
+            {openModalEdit && editingItem ? (
+                <ModalEdit item={editingItem} setOpen={setOpenModalEdit} onConfirm={editItem} />
+            ) : null}
 
             <button
                 id='newCat'
@@ -209,7 +226,13 @@ function BoardPage() {
                             <div key={item.id} className='card'>
                                 <div className='cardHeader'>
                                     <h2>{cardName} </h2>
-                                    <button className='editCardButton'>
+                                    <button
+                                        className='editCardButton'
+                                        onClick={() => {
+                                            setOpenModalEdit(true);
+                                            setEditingItem(item);
+                                        }}
+                                    >
                                         <img src={pencil} className='editButton' alt='edit' />
                                     </button>
                                 </div>
@@ -234,7 +257,13 @@ function BoardPage() {
                                             return (
                                                 <div className='taskCard' key={task.id}>
                                                     <div>{taskName}</div>
-                                                    <button className='editTaskButton'>
+                                                    <button
+                                                        className='editTaskButton'
+                                                        onClick={() => {
+                                                            setOpenModalEdit(true);
+                                                            setEditingItem(task);
+                                                        }}
+                                                    >
                                                         <img src={pencil} className='editButton' alt='edit' />
                                                     </button>
                                                 </div>
