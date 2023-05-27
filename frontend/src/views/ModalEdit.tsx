@@ -2,15 +2,15 @@ import "../assets/modal.css";
 import { Task } from "./Interfaces";
 
 interface modalCategoryProps {
-    catName: string;
+    type: string;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     tasks: Task[];
 }
 
-export default function ModalCategory({ catName, setOpen, tasks }: modalCategoryProps) {
+export default function ModalEdit({ type, setOpen, tasks }: modalCategoryProps) {
     return (
         <dialog open className='popUp'>
-            <h1>Category {catName}</h1>
+            <h1>Edit {type}</h1>
             <button
                 id='close'
                 onClick={() => {

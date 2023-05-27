@@ -31,6 +31,7 @@
     user-select: none;
     min-width: 400px;
     border: none;
+    z-index: 99999;
 }
 .popUp > input{
     padding-left: 10px;

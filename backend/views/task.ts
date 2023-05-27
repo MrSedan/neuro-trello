@@ -56,7 +56,7 @@ export default function (io: Server) {
                     description: description,
                 },
             });
-            io.emit("task_edit", result);
+            io.emit("edit_task", result);
             _res.status(200).json(result);
         } catch (error) {
             _res.status(500).send((error as Error).message);

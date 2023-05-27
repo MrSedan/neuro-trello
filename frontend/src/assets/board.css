@@ -38,9 +38,7 @@ button{
     padding-bottom: 2em;
     scrollbar-width: thin;
     scrollbar-color: #d3b168 #c0a15e;
-
 }
-
   
 #newCat{
     border-radius: 10px;
@@ -61,22 +59,66 @@ button{
     max-height: 60vh;
     overflow-y: scroll;
 }
+.cardHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
 .card > h2{    
+    max-width: 10em;
     white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }
-.card > button{
+.editCardButton{
+    width: 2em;
+    height: 2em;
+    background: none;
+    border: none;
+    filter: opacity(.4);
+}
+
+.editCardButton > img{
+    width: 1em;
+    height: 1em;
+}
+.card:hover .editCardButton {
+    filter: opacity(1);
+}
+.editTaskButton{
+    width: 2em;
+    height: 2em;
+    background: none;
+    border: none;
+    filter: opacity(0);
+}
+
+.editTaskButton > img{
+    width: 1em;
+    height: 1em;
+}
+.createTask{
     width: 100%;
     padding: 1em 0;
     background: none;
     border: 2px solid rgba(0,0,0,0.15);
     margin: 1em 0;
 }
+.taskCard{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px rgba(0,0,0,0.15) solid ;
+    padding: 1em;
+    width: 100%;
+    justify-content: space-between;
+}
 .task{
     white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
+}
+.taskCard:hover .editTaskButton{
+    filter: opacity(1);
 }

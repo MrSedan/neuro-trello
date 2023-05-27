@@ -4,10 +4,10 @@ import { AxiosError } from "axios";
 import axios from "../tools/api";
 import "../assets/board.css";
 import ModalCreate from "./ModalCreate";
-import ModalCategory from "./ModalCategory";
+import ModalEdit from "./ModalEdit";
 import { Task, Category } from "./Interfaces";
 import { SocketContext } from "../context/socket";
-
+import pencil from "../assets/img/pencil.svg";
 interface category {
     id: number;
     name: string;
@@ -25,7 +25,7 @@ function BoardPage() {
     const [categoryId, setCatId] = useState(0);
     const [openCreateCategory, setOpenCreateCategory] = useState(false);
     const [openCreateTask, setOpenCreateTask] = useState(false);
-    const [openModalCategory, setOpenModalCategory] = useState(false);
+    const [openModalEdit, setOpenModalEdit] = useState(false);
     const catDialogRef = useRef<HTMLDialogElement>(null);
     const taskDialogRef = useRef<HTMLDialogElement>(null);
     const [error, setError] = useState("");
@@ -46,19 +46,45 @@ function BoardPage() {
         const onNewTask = (task: Task) => {
             if (tasks.indexOf(task) === -1) setTasks((previous) => [...previous, task]);
         };
+        const onEditTask = (task: Task) => {
+            setTasks((previous) => {
+                const taskIndex = previous.findIndex((item) => item.id === task.id);
+                const editedTasks = previous;
+                editedTasks[taskIndex] = task;
+                return [...editedTasks];
+            });
+        };
+        const onDeleteTask = (task: Task) => {
+            setTasks((previous) => [...previous.filter((item) => item.id !== task.id)]);
+        };
         const onCategory = (categories: Category[]) => {
             setCategories(categories);
         };
         const onNewCategory = (category: Category) => {
             if (categories.indexOf(category) === -1) setCategories((previous) => [...previous, category]);
         };
+        const onEditCategory = (category: Category) => {
+            setCategories((previous) => {
+                const categoryIndex = previous.findIndex((item) => item.id === category.id);
+                const editedCategories = previous;
+                editedCategories[categoryIndex] = category;
+                return [...editedCategories];
+            });
+        };
+        const onDeleteCategory = (category: Category) => {
+            setCategories((previous) => [...previous.filter((item) => item.id !== category.id)]);
+        };
         socket.on("connect", onConnect);
         socket.on("disconnect", onDisconnect);
         socket.on("connect_error", onError);
         socket.on("tasks", onTasks);
         socket.on("new_task", onNewTask);
+        socket.on("edit_task", onEditTask);
+        socket.on("del_task", onDeleteTask);
         socket.on("categories", onCategory);
         socket.on("new_category", onNewCategory);
+        socket.on("edit_category", onEditCategory);
+        socket.on("del_category", onDeleteCategory);
         socket.on("error", onError);
         return () => {
             socket.off("connect", onConnect);
@@ -66,8 +92,12 @@ function BoardPage() {
             socket.off("connect_error", onError);
             socket.off("tasks", onTasks);
             socket.off("new_task", onNewTask);
+            socket.off("edit_task", onEditTask);
+            socket.off("del_task", onDeleteTask);
             socket.off("categories", onCategory);
             socket.off("new_category", onNewCategory);
+            socket.off("edit_category", onEditCategory);
+            socket.off("del_category", onDeleteCategory);
             socket.off("error", onError);
         };
     }, [socket, categories, tasks]);
@@ -174,10 +204,17 @@ function BoardPage() {
             <div className='desk'>
                 {categories &&
                     categories.map((item) => {
+                        const cardName = item.name.length > 15 ? item.name.substring(0, 15) + "..." : item.name;
                         return (
                             <div key={item.id} className='card'>
-                                <h2>{item.name}</h2>
+                                <div className='cardHeader'>
+                                    <h2>{cardName} </h2>
+                                    <button className='editCardButton'>
+                                        <img src={pencil} className='editButton' alt='edit' />
+                                    </button>
+                                </div>
                                 <button
+                                    className='createTask'
                                     onClick={() => {
                                         setCatId(item.id);
                                         setOpenCreateTask(true);
@@ -185,17 +222,21 @@ function BoardPage() {
                                 >
                                     +
                                 </button>
-                                <hr />
+
                                 <div className='task'>
                                     {tasks
                                         .filter((task) => {
                                             return task.categoryId === item.id;
                                         })
                                         .map((task) => {
+                                            const taskName =
+                                                task.name.length > 23 ? task.name.substring(0, 23) + "..." : task.name;
                                             return (
-                                                <div key={task.id}>
-                                                    {task.name}
-                                                    <hr />
+                                                <div className='taskCard' key={task.id}>
+                                                    <div>{taskName}</div>
+                                                    <button className='editTaskButton'>
+                                                        <img src={pencil} className='editButton' alt='edit' />
+                                                    </button>
                                                 </div>
                                             );
                                         })}
