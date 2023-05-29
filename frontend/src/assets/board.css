@@ -107,6 +107,7 @@ button{
     padding: 1em;
     width: 100%;
     justify-content: space-between;
+    cursor: grab;
 }
 .task{
     white-space: nowrap;

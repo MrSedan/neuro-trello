@@ -8,6 +8,7 @@ import ModalEdit from "./ModalEdit";
 import { Task, Category } from "./Interfaces";
 import { SocketContext } from "../context/socket";
 import pencil from "../assets/img/pencil.svg";
+import { dragEndHandler, dragOverHandler, dragStartHandler, dropCardHandler, dropHandler } from "../tools/dragndrop";
 interface category {
     id: number;
     name: string;
@@ -30,6 +31,8 @@ function BoardPage() {
     const catDialogRef = useRef<HTMLDialogElement>(null);
     const taskDialogRef = useRef<HTMLDialogElement>(null);
     const [error, setError] = useState("");
+    const [currentCard, setCurrentCard] = useState<Category>();
+    const [currentTaskCard, setCurrentTaskCard] = useState<Task>();
     useEffect(() => {
         const onConnect = () => {
             socket.emit("get_categories");
@@ -81,6 +84,7 @@ function BoardPage() {
         socket.on("tasks", onTasks);
         socket.on("new_task", onNewTask);
         socket.on("edit_task", onEditTask);
+        socket.on("move_task", onEditTask);
         socket.on("del_task", onDeleteTask);
         socket.on("categories", onCategory);
         socket.on("new_category", onNewCategory);
@@ -94,6 +98,7 @@ function BoardPage() {
             socket.off("tasks", onTasks);
             socket.off("new_task", onNewTask);
             socket.off("edit_task", onEditTask);
+            socket.off("move_task", onEditTask);
             socket.off("del_task", onDeleteTask);
             socket.off("categories", onCategory);
             socket.off("new_category", onNewCategory);
@@ -223,7 +228,12 @@ function BoardPage() {
                     categories.map((item) => {
                         const cardName = item.name.length > 15 ? item.name.substring(0, 15) + "..." : item.name;
                         return (
-                            <div key={item.id} className='card'>
+                            <div
+                                key={item.id}
+                                className='card'
+                                onDragOver={(e) => dragOverHandler(e)}
+                                onDrop={(e) => dropHandler(e, item, currentTaskCard)}
+                            >
                                 <div className='cardHeader'>
                                     <h2>{cardName} </h2>
                                     <button
@@ -255,7 +265,21 @@ function BoardPage() {
                                             const taskName =
                                                 task.name.length > 23 ? task.name.substring(0, 23) + "..." : task.name;
                                             return (
-                                                <div className='taskCard' key={task.id}>
+                                                <div
+                                                    className='taskCard'
+                                                    key={task.id}
+                                                    onDragStart={(e) =>
+                                                        dragStartHandler(
+                                                            e,
+                                                            item,
+                                                            task,
+                                                            setCurrentCard,
+                                                            setCurrentTaskCard,
+                                                        )
+                                                    }
+                                                    onDrop={(e) => dropHandler(e, item, currentTaskCard)}
+                                                    draggable={true}
+                                                >
                                                     <div>{taskName}</div>
                                                     <button
                                                         className='editTaskButton'
