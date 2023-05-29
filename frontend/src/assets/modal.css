@@ -1,3 +1,4 @@
+
 .popUp{
     margin: 0 auto;
     text-align: center;
@@ -10,8 +11,8 @@
     -webkit-transition: 0.3s ease-in-out;
     -o-transition: 0.3s ease-in-out;
     transition: 0.3s ease-in-out;
-    height: 28vh;
-    width: 30vw;
+    /* height: 28vh;
+    width: 30vw; */
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -47,6 +48,7 @@
     min-height: 32px;
 }
 .popUp > textarea {
+    margin: 1em;
     padding-left: 10px;
     height: 2rem;
     line-height: 2rem;
@@ -56,11 +58,13 @@
     border: #f5cd79;
     background: white;
     border-radius: 15px;
-    min-width: 200px;
-    min-height: 32px;
+    min-width: 2em;
+    min-height: 3em;
+    height: 1.5rem;
+    resize: none;
+    line-height: 1.25em;
 }
 .popUp > button{
-    position: absolute;
     height: 4vh;
     width: 6vw;
     border: none;
@@ -71,7 +75,11 @@
     min-height: 32px;
     bottom: 15%;
 }
-
+#delete{
+    color: white;
+    margin: 1em;
+    background: #e15f41;
+}
 #close{
     height: 2vh;
     width: 2vw;

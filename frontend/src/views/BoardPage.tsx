@@ -8,7 +8,7 @@ import ModalEdit from "./ModalEdit";
 import { Task, Category } from "./Interfaces";
 import { SocketContext } from "../context/socket";
 import pencil from "../assets/img/pencil.svg";
-import { dragEndHandler, dragOverHandler, dragStartHandler, dropCardHandler, dropHandler } from "../tools/dragndrop";
+import { dragOverHandler, dragStartHandler, dropHandler } from "../tools/dragndrop";
 interface category {
     id: number;
     name: string;
@@ -168,6 +168,20 @@ function BoardPage() {
             }
         }
     }
+    async function deleteItem(item: Category | Task) {
+        const pass = localStorage.getItem("Password") || "";
+        const url = "/" + ("categoryId" in item ? "task" : "category") + "/delete";
+        try {
+            await axios.post(url, item, {
+                headers: { Authorization: pass },
+            });
+            console.log("Item Deleted!");
+        } catch (error) {
+            if ((error as AxiosError).response) {
+                console.error("Error", error);
+            }
+        }
+    }
     return (
         <div>
             <div className='menu'>
@@ -211,7 +225,17 @@ function BoardPage() {
             ) : null}
 
             {openModalEdit && editingItem ? (
-                <ModalEdit item={editingItem} setOpen={setOpenModalEdit} onConfirm={editItem} />
+                <ModalEdit
+                    item={editingItem}
+                    setOpen={setOpenModalEdit}
+                    onConfirm={editItem}
+                    onDelete={() => {
+                        if (window.confirm("Are you sure?")) {
+                            deleteItem(editingItem);
+                            setOpenModalEdit(false);
+                        }
+                    }}
+                />
             ) : null}
 
             <button

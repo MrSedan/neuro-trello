@@ -6,9 +6,10 @@ interface modalEditProps {
     item: Task | Category;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     onConfirm: (item: Task | Category) => void;
+    onDelete: () => void;
 }
 
-export default function ModalEdit({ item, setOpen, onConfirm }: modalEditProps) {
+export default function ModalEdit({ item, setOpen, onConfirm, onDelete }: modalEditProps) {
     const nameInputRef = useRef<HTMLInputElement>(null);
     const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
     useEffect(() => {
@@ -28,6 +29,14 @@ export default function ModalEdit({ item, setOpen, onConfirm }: modalEditProps) 
             </button>
             <input placeholder={item.name} ref={nameInputRef} />
             {"categoryId" in item ? <textarea placeholder={item.description || ""} ref={descriptionInputRef} /> : null}
+            <button
+                id='delete'
+                onClick={() => {
+                    onDelete();
+                }}
+            >
+                DELETE
+            </button>
             <button
                 id='confirm'
                 onClick={() => {

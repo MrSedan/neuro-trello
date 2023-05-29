@@ -15,7 +15,6 @@ export function dragStartHandler(
         setCurrentTaskCard(task);
     }
 }
-export function dragEndHandler(e: DragEvent<HTMLDivElement>) {}
 export function dragOverHandler(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
 }
@@ -36,8 +35,5 @@ export async function dropHandler(e: DragEvent<HTMLDivElement>, card: Category |
         }
     }
 }
-
-}
-export function dropCardHandler(e: DragEvent<HTMLDivElement>, card: Category | undefined ){
 
 }
