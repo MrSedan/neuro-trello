@@ -27,7 +27,7 @@ button{
     display: flex;
     background: #f7d794;
     width: auto;
-    overflow-x: scroll;
+    overflow-x: auto;
     margin: 5px;
     height: 75vh;
     padding-bottom: 2em;
@@ -52,7 +52,8 @@ button{
     min-height: 10vh;
     height: fit-content;
     max-height: 60vh;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: none;
 }
 .cardHeader{
     display: flex;
