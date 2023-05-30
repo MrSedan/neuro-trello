@@ -20,6 +20,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./backend/prisma:/app/prisma
+      - ./backend/.env:/app/.env
     networks:
       - labnet
     ports:
