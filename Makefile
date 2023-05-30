@@ -25,7 +25,7 @@ down:
 	docker-compose down && docker-compose -f docker-compose.dev.yml down
 
 migrate:
-	cd backend && pnpm exec prisma migrate deploy && pnpm dlx dotenv-cli -e .env.local -- pnpm exec prisma migrate dev && pnpm exec prisma generate
+	cd backend && pnpm dlx prisma migrate deploy && pnpm dlx dotenv-cli -e .env.local -- pnpm dlx prisma migrate dev && pnpm dlx prisma generate
 
 install:
 	cd backend && pnpm i --frozen-lockfile && cd ../frontend && pnpm i --frozen-lockfile 
