@@ -24,8 +24,8 @@ export default function ProtectedRoutes() {
                 });
         };
         isAuth();
-    }, [isLoggedIn]);
+    }, []);
 
     if (isChecking) return <p>Checking...</p>;
-    return isLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
+    return isLoggedIn ? <Outlet /> : <Navigate to='/login' replace />;
 }
