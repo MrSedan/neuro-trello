@@ -6,10 +6,7 @@ interface GetUserState {
     username?: string;
 }
 
-class GetUserPage extends React.Component<
-    { params: { id: string } },
-    GetUserState
-> {
+class GetUserPage extends React.Component<{ params: { id: string } }, GetUserState> {
     user_id?: string;
 
     constructor(props: { params: { id: string } }) {
@@ -26,13 +23,10 @@ class GetUserPage extends React.Component<
     }
 
     async getUser() {
-        console.log("Aboba1");
         await axios
             .get(`http://localhost:3500/user/get/${this.user_id}`)
             .then((response) => {
-                console.log("Aboba2");
                 const data = response.data;
-                console.log(data);
                 this.setState({
                     username: data.username,
                 });

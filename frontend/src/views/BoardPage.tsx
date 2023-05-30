@@ -31,8 +31,8 @@ function BoardPage() {
     const [editingItem, setEditingItem] = useState<Task | Category>();
     const catDialogRef = useRef<HTMLDialogElement>(null);
     const taskDialogRef = useRef<HTMLDialogElement>(null);
-    const [error, setError] = useState("");
-    const [currentCard, setCurrentCard] = useState<Category>();
+    const [, setError] = useState("");
+    const [, setCurrentCard] = useState<Category>();
     const [currentTaskCard, setCurrentTaskCard] = useState<Task>();
     useEffect(() => {
         const onConnect = () => {
@@ -125,7 +125,6 @@ function BoardPage() {
                     headers: { Authorization: pass },
                 },
             );
-            console.log("Category Created!");
             if (catDialogRef.current) catDialogRef.current.style.visibility = "hidden";
         } catch (error) {
             if ((error as AxiosError).response) {
@@ -149,7 +148,6 @@ function BoardPage() {
                     headers: { Authorization: pass },
                 },
             );
-            console.log("Task Created!");
             if (taskDialogRef.current) taskDialogRef.current.style.visibility = "hidden";
         } catch (error) {
             if ((error as AxiosError).response) {
@@ -164,7 +162,6 @@ function BoardPage() {
             await axios.post(url, item, {
                 headers: { Authorization: pass },
             });
-            console.log("Item edited!");
         } catch (error) {
             if ((error as AxiosError).response) {
                 console.error("Error", error);
@@ -178,7 +175,6 @@ function BoardPage() {
             await axios.post(url, item, {
                 headers: { Authorization: pass },
             });
-            console.log("Item Deleted!");
         } catch (error) {
             if ((error as AxiosError).response) {
                 console.error("Error", error);

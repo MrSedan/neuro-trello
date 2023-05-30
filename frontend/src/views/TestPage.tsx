@@ -24,14 +24,12 @@ export default function TestPage() {
     }, [socket]);
     useEffect(() => {
         const onConnect = () => {
-            console.log("Con");
             setError("");
             setConnected(true);
             socket.emit("get_tasks");
             localStorage.setItem("Password", inputRef.current?.value || localStorage.getItem("Password") || "");
         };
         const onDisconnect = () => {
-            console.log("Disc");
             setConnected(false);
         };
         const onError = (error: Error) => {

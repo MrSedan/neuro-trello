@@ -24,11 +24,9 @@ export async function dropHandler(e: DragEvent<HTMLDivElement>, card: Category |
     const pass = localStorage.getItem("Password") || "";
     const url = "/task/move";
     try {
-        const result = await axios.post(url, {id: task.id, category_id: card.id}, {
+        await axios.post(url, {id: task.id, category_id: card.id}, {
             headers: { Authorization: pass },
         });
-        
-        console.log(result);
     } catch (error) {
         if ((error as AxiosError).response) {
             console.error("Error", error);

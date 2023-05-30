@@ -62,7 +62,6 @@ interface MyError extends Error {
 
 io.use(async (socket, next) => {
     const pass = socket.handshake.auth.pass;
-    console.log("Someone trying to connect with pass", pass);
     if (pass === process.env.PASSWORD) {
         return next();
     }
@@ -72,9 +71,7 @@ io.use(async (socket, next) => {
 });
 
 io.on("connection", (socket) => {
-    console.log("user connected");
     socket.on("disconnect", () => {
-        console.log("user disconnected");
         socket.removeAllListeners();
     });
     socket.on("get_tasks", async () => {

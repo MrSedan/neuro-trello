@@ -16,7 +16,6 @@ export default function LoginUserPage() {
                 password: password,
             });
             localStorage.setItem("Password", password);
-            console.log("Saved pass");
             navigate("/board");
         } catch (error) {
             if ((error as AxiosError).response) {
@@ -27,7 +26,6 @@ export default function LoginUserPage() {
                 setError("Something went wrong!");
             }
             localStorage.removeItem("Password");
-            console.log("Deleted pass");
         }
     }
     return (

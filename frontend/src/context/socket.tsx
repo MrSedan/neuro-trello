@@ -23,7 +23,6 @@ const MySocketProvider = () => {
     const updatePass = (newPass: string) => {
         socket.auth = { pass: newPass };
         if (socket.connected) {
-            console.log("restarting socket");
             socket.disconnect();
             socket.connect();
         }
