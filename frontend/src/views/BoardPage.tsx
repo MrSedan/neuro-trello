@@ -8,6 +8,7 @@ import ModalEdit from "./ModalEdit";
 import { Task, Category } from "./Interfaces";
 import { SocketContext } from "../context/socket";
 import pencil from "../assets/img/pencil.svg";
+
 import { dragOverHandler, dragStartHandler, dropHandler } from "../tools/dragndrop";
 interface category {
     id: number;
@@ -251,7 +252,7 @@ function BoardPage() {
             <div className='desk'>
                 {categories &&
                     categories.map((item) => {
-                        const cardName = item.name.length > 15 ? item.name.substring(0, 15) + "..." : item.name;
+                        // const cardName = item.name.length > 15 ? item.name.substring(0, 15) + "..." : item.name;
                         return (
                             <div
                                 key={item.id}
@@ -260,7 +261,7 @@ function BoardPage() {
                                 onDrop={(e) => dropHandler(e, item, currentTaskCard)}
                             >
                                 <div className='cardHeader'>
-                                    <h2>{cardName} </h2>
+                                    <h2>{item.name} </h2>
                                     <button
                                         className='editCardButton'
                                         onClick={() => {
@@ -287,8 +288,8 @@ function BoardPage() {
                                             return task.categoryId === item.id;
                                         })
                                         .map((task) => {
-                                            const taskName =
-                                                task.name.length > 23 ? task.name.substring(0, 23) + "..." : task.name;
+                                            // const taskName =
+                                            // task.name.length > 23 ? task.name.substring(0, 23) + "..." : task.name;
                                             return (
                                                 <div
                                                     className='taskCard'
@@ -305,8 +306,10 @@ function BoardPage() {
                                                     onDrop={(e) => dropHandler(e, item, currentTaskCard)}
                                                     draggable={true}
                                                 >
-                                                    <div>{taskName}</div>
-
+                                                    <div>{task.name}</div>
+                                                    {/* TODO: Add description indicator
+                                                    
+                                                    {task.description ? <div className='desc'>desc</div> : ""} */}
                                                     <button
                                                         className='editTaskButton'
                                                         onClick={() => {

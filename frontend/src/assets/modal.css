@@ -1,18 +1,21 @@
-
+.modalBackground{
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+}
 .popUp{
     margin: 0 auto;
     text-align: center;
     background-color: #f19066;
     padding: 2rem;
     border-radius: 30px;
-    -webkit-box-shadow: 0 0 50px 10000px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0 0 50px 10000px rgba(0, 0, 0, 0.75);
-    box-shadow: 0 0 50px 10000px rgba(0, 0, 0, 0.75);
     -webkit-transition: 0.3s ease-in-out;
     -o-transition: 0.3s ease-in-out;
     transition: 0.3s ease-in-out;
-    /* height: 28vh;
-    width: 30vw; */
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -33,6 +36,8 @@
     min-width: 400px;
     border: none;
     z-index: 99999;
+    overflow-wrap: anywhere;
+    margin-top:10vh;
 }
 .popUp > input {
     padding-left: 10px;
@@ -40,7 +45,7 @@
     line-height: 2rem;
     vertical-align: middle;
     width: 15vw;
-    font-size: 1.5em;
+    font-size: 1.2em;
     border: #f5cd79;
     background: white;
     border-radius: 15px;

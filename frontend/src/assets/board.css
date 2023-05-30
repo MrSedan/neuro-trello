@@ -43,6 +43,7 @@ button{
 
 }
 .card {
+    font-size: 12px;
     border-radius: 10px;
     background: white;
     margin: 4px;
@@ -54,6 +55,7 @@ button{
     max-height: 60vh;
     overflow-y: auto;
     overflow-x: none;
+    overflow-wrap: anywhere;
 }
 .cardHeader{
     display: flex;
@@ -63,9 +65,7 @@ button{
 .card > h2{    
     max-width: 10em;
     white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 .editCardButton{
     width: 2em;
@@ -105,17 +105,15 @@ button{
     display: flex;
     flex-direction: row;
     border-bottom: 2px rgba(0,0,0,0.15) solid ;
-    padding: 1em;
+    padding: 0.5em;
     width: 100%;
     justify-content: space-between;
     cursor: grab;
 }
 .task{
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    font-size: 16px;
 }
+
 .taskCard:hover .editTaskButton{
     filter: opacity(1);
 }

@@ -8,35 +8,37 @@ interface modalCreateProps {
 }
 export default function ModalCreate({ name, setOpen, onConfirm, nameInputRef, descriptionInputRef }: modalCreateProps) {
     return (
-        <dialog open className='popUp'>
-            <h1>Create new {name}</h1>
-            <button
-                id='close'
-                onClick={() => {
-                    setOpen(false);
-                }}
-            >
-                X
-            </button>
-            <input
-                ref={nameInputRef}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") {
+        <div className='modalBackground'>
+            <dialog open className='popUp'>
+                <h1>Create new {name}</h1>
+                <button
+                    id='close'
+                    onClick={() => {
+                        setOpen(false);
+                    }}
+                >
+                    X
+                </button>
+                <input
+                    ref={nameInputRef}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            onConfirm();
+                            setOpen(false);
+                        }
+                    }}
+                    placeholder={`${name} name`}
+                />
+                {descriptionInputRef ? <textarea placeholder='description' ref={descriptionInputRef} /> : null}
+                <button
+                    onClick={() => {
                         onConfirm();
                         setOpen(false);
-                    }
-                }}
-                placeholder={`${name} name`}
-            />
-            {descriptionInputRef ? <textarea placeholder='description' ref={descriptionInputRef} /> : null}
-            <button
-                onClick={() => {
-                    onConfirm();
-                    setOpen(false);
-                }}
-            >
-                Confirm
-            </button>
-        </dialog>
+                    }}
+                >
+                    Confirm
+                </button>
+            </dialog>
+        </div>
     );
 }
