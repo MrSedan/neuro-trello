@@ -3,9 +3,10 @@ interface modalCreateProps {
     name: string;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     onConfirm: () => void;
-    inputRef: React.RefObject<HTMLInputElement>;
+    nameInputRef: React.RefObject<HTMLInputElement>;
+    descriptionInputRef: React.RefObject<HTMLTextAreaElement> | null;
 }
-export default function ModalCreate({ name, setOpen, onConfirm, inputRef }: modalCreateProps) {
+export default function ModalCreate({ name, setOpen, onConfirm, nameInputRef, descriptionInputRef }: modalCreateProps) {
     return (
         <dialog open className='popUp'>
             <h1>Create new {name}</h1>
@@ -18,7 +19,7 @@ export default function ModalCreate({ name, setOpen, onConfirm, inputRef }: moda
                 X
             </button>
             <input
-                ref={inputRef}
+                ref={nameInputRef}
                 onKeyDown={(e) => {
                     if (e.key === "Enter") {
                         onConfirm();
@@ -27,6 +28,7 @@ export default function ModalCreate({ name, setOpen, onConfirm, inputRef }: moda
                 }}
                 placeholder={`${name} name`}
             />
+            {descriptionInputRef ? <textarea placeholder='description' ref={descriptionInputRef} /> : null}
             <button
                 onClick={() => {
                     onConfirm();

@@ -21,6 +21,7 @@ function BoardPage() {
     const navigate = useNavigate();
     const catInputRef = useRef<HTMLInputElement>(null);
     const taskInputRef = useRef<HTMLInputElement>(null);
+    const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
     const [categories, setCategories] = useState<category[]>([]);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [categoryId, setCatId] = useState(0);
@@ -134,6 +135,7 @@ function BoardPage() {
     }
     async function createTask(catId: number) {
         const taskName = taskInputRef.current?.value || "";
+        const description = descriptionInputRef.current?.value || "";
         const pass = localStorage.getItem("Password") || "";
         try {
             await axios.post(
@@ -141,6 +143,7 @@ function BoardPage() {
                 {
                     name: taskName,
                     category_id: catId,
+                    description: description,
                 },
                 {
                     headers: { Authorization: pass },
@@ -210,7 +213,8 @@ function BoardPage() {
                     name='Category'
                     setOpen={setOpenCreateCategory}
                     onConfirm={createCategory}
-                    inputRef={catInputRef}
+                    nameInputRef={catInputRef}
+                    descriptionInputRef={null}
                 />
             ) : null}
             {openCreateTask ? (
@@ -220,7 +224,8 @@ function BoardPage() {
                     onConfirm={() => {
                         createTask(categoryId);
                     }}
-                    inputRef={taskInputRef}
+                    nameInputRef={taskInputRef}
+                    descriptionInputRef={descriptionInputRef}
                 />
             ) : null}
 
@@ -305,6 +310,7 @@ function BoardPage() {
                                                     draggable={true}
                                                 >
                                                     <div>{taskName}</div>
+
                                                     <button
                                                         className='editTaskButton'
                                                         onClick={() => {
