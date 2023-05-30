@@ -7,7 +7,6 @@ import BoardPage from "./BoardPage";
 import "../assets/main.css";
 import LoginUserPage from "./user/LoginUser";
 import ProtectedRoutes from "../tools/hasAccess";
-import TestPage from "./TestPage";
 import MySocketProvider from "../context/socket";
 function App() {
     return (
@@ -19,7 +18,7 @@ function App() {
                     <Route path='404' element={<PageNotFound />} />
                     <Route path='login' element={<LoginUserPage />} />
                     <Route element={<MySocketProvider />}>
-                        <Route path='test' element={<TestPage />}></Route>
+                        {/* <Route path='test' element={<TestPage />}></Route> */}
                         <Route element={<ProtectedRoutes />}>
                             <Route path='board' element={<BoardPage />} />
                         </Route>
