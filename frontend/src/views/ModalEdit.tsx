@@ -46,8 +46,7 @@ export default function ModalEdit({ item, setOpen, onConfirm, onDelete }: modalE
                         const sendItem = structuredClone(item);
                         sendItem.name = nameInputRef.current?.value || item.name;
                         if ("categoryId" in item) {
-                            (sendItem as Task).description =
-                                item.description || descriptionInputRef.current?.value || "";
+                            (sendItem as Task).description = descriptionInputRef.current?.value || "";
                         }
                         onConfirm(sendItem);
                         setOpen(false);
