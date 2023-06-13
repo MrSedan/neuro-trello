@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import axios from "../../tools/api";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../assets/login.css";
+import "../../assets/styles/login.scss";
 export default function LoginUserPage() {
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
@@ -30,21 +30,22 @@ export default function LoginUserPage() {
     }
     return (
         <div className='login'>
-            <div className='entryField'>
+            <div className='login__entry-field'>
                 <h1>Login</h1>
                 <input
                     type='password'
                     ref={inputRef}
+                    className='login__pass-field'
                     onKeyDown={(e) => {
                         if (e.key === "Enter") login();
                     }}
                     placeholder='Password'
                 />
-                <button onClick={login} type='submit'>
+                <button onClick={login} type='submit' className='login__submit-btn'>
                     Login
                 </button>
             </div>
-            <div className={`error ${error !== "" ? "active" : ""}`}>{error}</div>
+            <div className={`login__error ${error !== "" ? "active" : ""}`}>{error}</div>
         </div>
     );
 }

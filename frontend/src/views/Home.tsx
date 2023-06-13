@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import "../assets/home.css";
+import "../assets/styles/hello.scss";
 
 function HomePage() {
     const navigate = useNavigate();
     return (
         <div
-            className='homePage'
+            className='hello-page'
             onClick={() => {
                 navigate("/board");
             }}

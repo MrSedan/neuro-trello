@@ -1,0 +1,29 @@
+.hello-page {
+    margin: 10em auto 0;
+    text-align: center;
+    padding: 2em;
+    border-radius: 30px;
+    box-shadow: 10px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+    width: 50em;
+    min-width: 400px;
+    max-width: 80vw;
+    min-height: 15em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: whitesmoke;
+    flex-direction: column;
+    cursor: pointer;
+    user-select: none;
+    &:hover {
+        padding: 4em;
+        box-shadow: 20px 18px rgba(0, 0, 0, 0.25);
+        border-radius: 50px;
+        background-color: white;
+        min-height: 20em;
+    }
+    h1 {
+        margin-bottom: 1em;
+    }
+}

@@ -2,7 +2,7 @@ import { useContext, useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import axios from "../tools/api";
-import "../assets/board.css";
+import "../assets/styles/board.scss";
 import ModalCreate from "./ModalCreate";
 import ModalEdit from "./ModalEdit";
 import { Task, Category } from "./Interfaces";
@@ -183,11 +183,12 @@ function BoardPage() {
         }
     }
     return (
-        <div>
+        <div className='home-page'>
             <div className='menu'>
-                <h1>Board</h1>
-                <div>
+                <h1 className='menu__header'>Board</h1>
+                <div className='menu__btns'>
                     <button
+                        className='menu__btn'
                         onClick={() => {
                             navigate("/", { replace: true });
                         }}
@@ -195,7 +196,7 @@ function BoardPage() {
                         Go back
                     </button>
                     <button
-                        style={{ background: "#e15f41", color: "white" }}
+                        className='menu__btn'
                         onClick={() => {
                             localStorage.removeItem("Password");
                             navigate("/login", { replace: true });
@@ -241,7 +242,7 @@ function BoardPage() {
             ) : null}
 
             <button
-                id='newCat'
+                id='new-cat-btn'
                 onClick={() => {
                     setOpenCreateCategory(true);
                 }}
@@ -256,24 +257,24 @@ function BoardPage() {
                         return (
                             <div
                                 key={item.id}
-                                className='card'
+                                className='category'
                                 onDragOver={(e) => dragOverHandler(e)}
                                 onDrop={(e) => dropHandler(e, item, currentTaskCard)}
                             >
-                                <div className='cardHeader'>
+                                <div className='category__header'>
                                     <h2>{item.name} </h2>
                                     <button
-                                        className='editCardButton'
+                                        className='category__edit-btn'
                                         onClick={() => {
                                             setOpenModalEdit(true);
                                             setEditingItem(item);
                                         }}
                                     >
-                                        <img src={pencil} className='editButton' alt='edit' />
+                                        <img src={pencil} className='category__edit-btn-img' alt='edit' />
                                     </button>
                                 </div>
                                 <button
-                                    className='createTask'
+                                    className='category__create-task-btn'
                                     onClick={() => {
                                         setCatId(item.id);
                                         setOpenCreateTask(true);
@@ -282,7 +283,7 @@ function BoardPage() {
                                     +
                                 </button>
 
-                                <div className='task'>
+                                <div className='tasks'>
                                     {tasks
                                         .filter((task) => {
                                             return task.categoryId === item.id;
@@ -292,7 +293,7 @@ function BoardPage() {
                                             // task.name.length > 23 ? task.name.substring(0, 23) + "..." : task.name;
                                             return (
                                                 <div
-                                                    className='taskCard'
+                                                    className='tasks__task'
                                                     key={task.id}
                                                     onDragStart={(e) =>
                                                         dragStartHandler(
@@ -311,13 +312,13 @@ function BoardPage() {
                                                     
                                                     {task.description ? <div className='desc'>desc</div> : ""} */}
                                                     <button
-                                                        className='editTaskButton'
+                                                        className='tasks__task-edit-btn'
                                                         onClick={() => {
                                                             setOpenModalEdit(true);
                                                             setEditingItem(task);
                                                         }}
                                                     >
-                                                        <img src={pencil} className='editButton' alt='edit' />
+                                                        <img src={pencil} alt='edit' />
                                                     </button>
                                                 </div>
                                             );

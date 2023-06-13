@@ -1,0 +1,148 @@
+$scroll-bar-width: 0.3em;
+@mixin rounded {
+    border-radius: 10px;
+}
+@mixin edit-btn($opacity: 0.4) {
+    width: 2em;
+    height: 2em;
+    background: none;
+    border: none;
+    filter: opacity($opacity);
+    transition: 0.2s ease-in-out;
+    img {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+button {
+    @include rounded;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+.home-page {
+    margin: 2em;
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #574b90 transparent;
+        &::-webkit-scrollbar {
+            display: none;
+            width: $scroll-bar-width;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        @media (hover: none) {
+            &::-webkit-scrollbar {
+                display: block;
+            }
+        }
+        &:hover::-webkit-scrollbar {
+            display: block;
+        }
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            @include rounded;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #574b90;
+            @include rounded;
+        }
+    }
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    &__btns {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 10vw;
+        min-width: 150px;
+    }
+    &__btn {
+        width: 5em;
+        height: 3em;
+        font-size: 1em;
+        &:last-child {
+            margin-left: 1em;
+            background-color: #546de5;
+            color: white;
+        }
+    }
+}
+#new-cat-btn {
+    width: 4em;
+    height: 2em;
+    margin: 0 0 2em;
+}
+
+.desk {
+    display: flex;
+    width: auto;
+    overflow-x: auto;
+    height: 75vh;
+    padding-bottom: 2em;
+    font-size: 1em;
+    .category {
+        display: flex;
+        flex-direction: column;
+        @include rounded;
+        background: white;
+        margin: 0.5em;
+        padding: 0.5em;
+        min-width: 300px;
+        width: 18vw;
+        min-height: 10vh;
+        height: fit-content;
+        max-height: 60vh;
+        overflow-wrap: anywhere;
+        &:first-child {
+            margin-left: 0;
+        }
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            h2 {
+                max-width: 90%;
+                word-wrap: break-word;
+                overflow-x: hidden;
+            }
+            &:hover .category__edit-btn {
+                filter: opacity(1);
+            }
+        }
+        .category__edit-btn {
+            @include edit-btn;
+        }
+        &__create-task-btn {
+            width: 100%;
+            padding: 1em 0;
+            background: none;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            margin: 1em 0;
+        }
+        .tasks {
+            font-size: 1em;
+            overflow-y: auto;
+            max-height: 100%;
+            &__task-edit-btn {
+                @include edit-btn(0);
+            }
+            &__task {
+                display: flex;
+                flex-direction: row;
+                border-bottom: 2px rgba(0, 0, 0, 0.15) solid;
+                padding: 0.5em;
+                width: 100%;
+                justify-content: space-between;
+                cursor: grab;
+                &:hover .tasks__task-edit-btn {
+                    filter: opacity(1);
+                }
+            }
+        }
+    }
+}

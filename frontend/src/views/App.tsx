@@ -4,14 +4,13 @@ import PageNotFound from "./404";
 import BoardPage from "./BoardPage";
 // import CreateUserPage from "./user/CreateUser";
 // import GetUserPage from "./user/GetUser";
-import "../assets/main.css";
+import "../assets/styles/main.scss";
 import LoginUserPage from "./user/LoginUser";
 import ProtectedRoutes from "../tools/hasAccess";
 import MySocketProvider from "../context/socket";
 function App() {
     return (
         <div>
-            <h1 className='title'>Neuro Trello</h1>
             <BrowserRouter>
                 <Routes>
                     <Route index element={<HomePage />} />
